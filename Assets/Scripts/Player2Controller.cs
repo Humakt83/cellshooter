@@ -28,7 +28,7 @@ public class Player2Controller : MonoBehaviour {
 	}
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFire) {
+        if (Input.GetButton("Fire1") && Time.time > nextFire) {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             GetComponent<AudioSource>().Play();
