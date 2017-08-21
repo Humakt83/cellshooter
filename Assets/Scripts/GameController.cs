@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     public GUIText scoreText;
     public GUIText restartText;
     public GUIText gameOverText;
+    public int playersCount = 2;
     private int score;
     private bool gameOver;
     private bool restart;
@@ -50,14 +51,27 @@ public class GameController : MonoBehaviour {
         yield return new WaitForSeconds(startWait);
         while (!gameOver) {
             for (int i = 0; i < hazardCount; i++) {
-                SpawnAsteroid();
+                SpawnEnemy();
                 yield return new WaitForSeconds(spawnWait);
             }
+            IncreaseDifficulty();
             yield return new WaitForSeconds(waveWait);
         }
     }
 
-    private void SpawnAsteroid() {
+    public void PlayerEliminated() {
+        playersCount--;
+        if (playersCount < 1 ) {
+            GameOver();
+        }
+    }
+
+    private void IncreaseDifficulty() {
+        hazardCount++;
+        spawnWait = Mathf.Max(0.05f, spawnWait - 0.02f);
+    }
+
+    private void SpawnEnemy() {
         Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
         Quaternion spawnRotation = Quaternion.identity;
         Instantiate(hazards[Random.Range(0, hazards.Length)], spawnPosition, spawnRotation);
