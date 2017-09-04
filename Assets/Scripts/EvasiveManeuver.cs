@@ -8,7 +8,6 @@ public class EvasiveManeuver : MonoBehaviour {
     public float dodge;
     public Vector2 maneuverTime;
     public Vector2 maneuverWait;
-    public float tilt;
     public float smoothing;
     public Boundary boundary;
 
@@ -30,7 +29,6 @@ public class EvasiveManeuver : MonoBehaviour {
             0.0f,
             Mathf.Clamp(rBody.position.z, boundary.zMin, boundary.zMax)
         );
-        rBody.rotation = Quaternion.Euler(0.0f, 0.0f, rBody.velocity.x * -tilt);
     }
 
     IEnumerator Evade() {
